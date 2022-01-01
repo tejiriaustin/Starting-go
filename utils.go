@@ -11,9 +11,8 @@ import (
 )
 
 type form struct {
-	Id      string `json:"id"`
-	Name    string `json:"name"`
-	Address string `json:"address"`
+	Id   string `json:"id"`
+	Name string `json:"name"`
 }
 
 func get_User(w http.ResponseWriter, r *http.Request) {

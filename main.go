@@ -23,10 +23,11 @@ func handleRequests() {
 	router := mux.NewRouter().StrictSlash(true)
 
 	port := os.Getenv("PORT")
+	fmt.Println(port)
 
 	fmt.Print("Starting go server...")
 	router.HandleFunc("/", indexHandler)
-	router.HandleFunc("/post_user/{name}/{id}", post_User).Methods("POST")
+	router.HandleFunc("/post_user", post_User).Methods("POST")
 	router.HandleFunc("/get_user", get_User).Methods("GET")
 	router.HandleFunc("/delete_user/{name}/{id}", delete_User).Methods("DELETE")
 	router.HandleFunc("/put_user/{name}/{id}", update_User).Methods("PUT")
