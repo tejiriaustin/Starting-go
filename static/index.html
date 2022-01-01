@@ -1,0 +1,61 @@
+<html>
+    <body>
+        <div>
+            <form method="POST" action="/put_user/{name}/{id}">
+                <p>INPUT</p>
+                <ul>
+                    <li>
+                        <label>NAME </label>
+                        <input name="name" id="name">
+                    </li>
+                    <li>
+                        <label>ID </label>
+                        <input name="id" id="id">
+                    </li>
+                    <li><input type="submit" value="Submit"  style="border-radius: 8 px;"></li>
+                </ul>
+            </form>
+        </div>
+    </body>
+</html>
+
+<style>
+div {
+    margin: 10% 40% 10% 40%;
+    text-align: center; 
+    width: 280px;
+    height: 350px; 
+    box-shadow: 1px 2px 2px 3px rgb(48, 48, 48); 
+    border-radius: 15px; 
+    background-color: white;
+}
+
+p {
+    font-family:cursive; 
+    margin: 15px;
+}
+
+input {
+    border-radius: 15px; 
+    padding: 5px; 
+    margin-top: 20px;
+}
+/* li {
+    display: flex;
+    margin-top: 10px;
+} */
+
+/* ul {
+    align-items: center;
+    margin-right: 5%;
+} */
+label {
+    margin-top: 20px;
+}
+li {
+    list-style: none;
+    align-self:auto;
+    margin-right: 30px;
+    right: auto;
+}
+</style>
