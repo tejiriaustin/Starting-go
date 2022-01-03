@@ -21,9 +21,7 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 func handleRequests() {
 
 	router := mux.NewRouter().StrictSlash(true)
-
 	port := os.Getenv("PORT")
-	fmt.Println(port)
 
 	fmt.Print("Starting go server...")
 	router.HandleFunc("/", indexHandler)
