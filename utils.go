@@ -3,8 +3,6 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
-	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -15,22 +13,18 @@ type form struct {
 	Name string `json:"name"`
 }
 
+var parent []form
+
 func get_User(w http.ResponseWriter, r *http.Request) {
-	byteArray, err := openAndRead()
-	if err != nil {
-		log.Fatal("Error reading from file")
-	}
-	error := json.Unmarshal(byteArray, w)
-	if error != nil {
-		log.Print(err)
-	}
-	fmt.Printf("%s", w)
+	byteArray, _ := readAsform()
+	arr, _ := json.MarshalIndent(byteArray, "", " ")
+	fmt.Fprintf(w, string(arr))
 }
 
 func delete_User(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Endpoint Hit: Delete")
 	vars := mux.Vars(r)
-	id := vars["Id"]
+	id := vars["id"]
 
 	byteArray, _ := readAsform()
 
@@ -46,23 +40,33 @@ func delete_User(w http.ResponseWriter, r *http.Request) {
 func update_User(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Endpoint Hit: Update")
 	delete_User(w, r)
-	elem, _ := ioutil.ReadAll(r.Body)
+	parent, _ = readAsform()
+	fmt.Println(parent)
+	var new_form form
 
-	byteArray, _ := openAndRead()
-	byteArray = append(byteArray, elem...)
+	new_form.Name = r.FormValue("name")
+	new_form.Id = r.FormValue("id")
 
-	openAndWrite(byteArray)
+	byteArray, _ := readAsform()
+	byteArray = append(byteArray, new_form)
+
+	arr, _ := json.MarshalIndent(byteArray, "", " ")
+	openAndWrite(arr)
 }
 
 func post_User(w http.ResponseWriter, r *http.Request) {
-	byteArray, err := openAndRead()
-	req_Body, err := ioutil.ReadAll(r.Body)
-	if err != nil {
-		log.Fatal("Error reading response")
-	}
-	byteArray = append(byteArray, req_Body...)
+	parent, _ = readAsform()
+	fmt.Println(parent)
+	var new_form form
 
-	openAndWrite(byteArray)
-	fmt.Fprint(w, byteArray)
-	fmt.Print("has been writtten to Database file")
+	new_form.Name = r.FormValue("name")
+	new_form.Id = r.FormValue("id")
+
+	byteArray := append(parent, new_form)
+
+	arr, _ := json.MarshalIndent(byteArray, "", " ")
+
+	fmt.Fprintf(w, string(arr))
+	openAndWrite(arr)
+	fmt.Println("has been written!")
 }
